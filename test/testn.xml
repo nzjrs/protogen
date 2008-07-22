@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+	<generic>
+		<output>
+			<binary_mode>true</binary_mode>
+			<binary_footer>magic,0x0A0B0C0D</binary_footer>
+            <binary_header>magic,0x12345678</binary_header>
+							
+			<chunk>
+				<name>int_value</name>
+				<type>int</type>
+				<node>integer</node>
+			</chunk>
+
+			<chunk>
+				<name>float_value</name>
+				<type>float</type>
+				<node>float</node>
+			</chunk>
+
+			<chunk>
+				<name>bool_value</name>
+				<type>bool</type>
+				<node>bools are sent as chars</node>
+			</chunk>
+
+		</output>
+	</generic>
+</PropertyList>

@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+	<generic>
+		<output>
+			<binary_mode>true</binary_mode>
+			<binary_footer>magic,0x0A0B0C0D</binary_footer>
+            <binary_header>magic,0x45455454</binary_header>
+							
+			<chunk>
+				<name>Float_Value</name>
+				<type>float</type>
+				<node>A Great Float</node>
+			</chunk>
+
+			<chunk>
+				<name>double_value</name>
+				<type>double</type>
+				<node>Im a Double</node>
+			</chunk>
+
+			<chunk>
+				<name>string_value</name>
+				<type>string</type>
+				<node>Strings is Fun</node>
+			</chunk>
+
+			<chunk>
+				<name>int_value</name>
+				<type>int</type>
+				<node>integer</node>
+			</chunk>
+
+			<chunk>
+				<name>bool_value</name>
+				<type>bool</type>
+				<node>Bools are sent as chars</node>
+			</chunk>
+
+			<chunk>
+				<name>another_string_value</name>
+				<type>string</type>
+				<node>Strings is Fun 2</node>
+			</chunk>
+
+			<chunk>
+				<name>another_float_value</name>
+				<type>float</type>
+				<node>A Second Great Float</node>
+			</chunk>
+
+		</output>
+	</generic>
+</PropertyList>
