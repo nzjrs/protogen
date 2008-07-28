@@ -111,7 +111,10 @@ class CWriter(writer.Writer):
         return "unsigned int pack_%s(const %s *data, unsigned char *buffer)" % (self.name.lower(), self.name)
 
     def _get_unpack_function_name(self):
-        return "char * unpack_%s(const unsigned char *buffer, %s *data)" % (self.name.lower(), self.name)
+        return "int unpack_%s(const unsigned char *buffer, %s *data)" % (self.name.lower(), self.name)
+
+    def _get_error_define(self, errorid):
+        return "%s_ERROR_%s" % (self.name.upper(), self.parser.get_error_name(errorid))
 
 class CBodyWriter(CWriter):
     def write_header(self, filename):
@@ -266,7 +269,9 @@ class CBodyWriter(CWriter):
                                     dest="data->header_magic",
                                     source_pointer="buffer+%d+str_offset" % offset)
                 self.f.write("\n\t%s;\n" % assignment)
-                self.f.write("\tif (data->header_magic != %s) return NULL;\n" % self.parser.binary_header[1]);
+                self.f.write("\tif (data->header_magic != %s) return %s;\n" % (
+                                    self.parser.binary_header[1],
+                                    self._get_error_define(self.parser.ERROR_HEADER_MAGIC)))
             offset += TYPE_SIZE_MAP["int"] #magic number is an integer
 
         self.f.write("\n")
@@ -307,10 +312,12 @@ class CBodyWriter(CWriter):
                                     dest="data->footer_magic",
                                     source_pointer="buffer+%d+str_offset" % offset)
                 self.f.write("\n\t%s;\n" % assignment)
-                self.f.write("\tif (data->footer_magic != %s) return NULL;\n" % self.parser.binary_footer[1]);
+                self.f.write("\tif (data->footer_magic != %s) return %s;\n" % (
+                                    self.parser.binary_footer[1],
+                                    self._get_error_define(self.parser.ERROR_FOOTER_MAGIC)))
             offset += TYPE_SIZE_MAP["int"] #magic number is an integer
 
-        self.f.write("\n\treturn (char *)(buffer+%d+str_offset);\n" % offset)
+        self.f.write("\n\treturn %d+str_offset;\n" % offset)
         self.f.write("}\n")
 
     def write_footer(self):
@@ -342,6 +349,11 @@ class CHeaderWriter(CWriter):
         self.f.write("extern \"C\"\n")
         self.f.write("{\n")
         self.f.write("#endif\n")
+
+        #write the #defines for the error constants
+        self.f.write("\n")
+        for err in self.parser.get_errors():
+            self.f.write("#define %s %d\n" % (self._get_error_define(err), err))
         
         #calculate the maximum size of buffer needed to hold the struct
         max_size = 0

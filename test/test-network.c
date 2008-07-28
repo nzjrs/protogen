@@ -39,11 +39,12 @@ int main (int argc, char **argv)
     //--------------------------------------------------------------------------
     testn_t unpacktest;
     
-    if (unpack_testn_t(packbuf, &unpacktest)) {
-        printf("Unpack OK\n");
+    int size = unpack_testn_t(packbuf, &unpacktest);
+    if (size > 0) {
+        printf("Unpack OK (%d bytes)\n", size);
         print_testn_t_csv_line(&unpacktest);
     } else {
-        printf("Parse Error\n");
+        printf("Parse Error: %d\n", size);
     }
 
     return 0;

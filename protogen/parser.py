@@ -9,6 +9,23 @@ class XMLProtocolParser:
     MID_TAG = "generic"
     PARENT_TAGS = ("output","input")
 
+    ERROR_HEADER_MAGIC      = -1
+    ERROR_FOOTER_MAGIC      = -2
+    ERROR_HEADER_SIZE       = -3
+    ERROR_FOOTER_SIZE       = -4
+    ERROR_HEADER_CHECKSUM   = -5
+    ERROR_FOOTER_CHECKSUM   = -6
+
+    PARSE_ERRORS = {
+        #value                  :   (name, description)
+        ERROR_HEADER_MAGIC :        ("HEADER_MAGIC",    "Incorrect Header Magic Number"),
+        ERROR_FOOTER_MAGIC :        ("FOOTER_MAGIC",    "Incorrect Header Magic Number"),
+        ERROR_HEADER_SIZE :         ("HEADER_SIZE",     "Incorrect Header Size"),
+        ERROR_FOOTER_SIZE :         ("FOOTER_SIZE",     "Incorrect Footer Size"),
+        ERROR_HEADER_CHECKSUM :     ("HEADER_CHECKSUM", "Incorrect Header Checksum"),
+        ERROR_FOOTER_CHECKSUM :     ("FOOTER_CHECKSUM", "Incorrect Footer Checksum")
+    }
+
     def __init__(self, xml_file, lowercase, enable_strings, use_doubles):
         self.xml_file = xml_file
         self.reversed = True
@@ -108,5 +125,14 @@ class XMLProtocolParser:
         # Reverse the list because when we built the tree we 
         # inserted everything into position 0
         self._fix_ordering()
-        
+
+    def get_errors(self):
+        return self.PARSE_ERRORS.keys()
+
+    def get_error_name(self, errorid):
+        return self.PARSE_ERRORS[errorid][0]
+
+    def get_error_description(self, errorid):
+        return self.PARSE_ERRORS[errorid][1]
+
 

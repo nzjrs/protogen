@@ -124,12 +124,12 @@ int main (int argc, char **argv) {
 #endif
     test_t unpacktest;
     
-    
-    if (unpack_test_t(unpackbuf, &unpacktest)) {
-        printf("Unpack OK\n");
+    int size = unpack_test_t(unpackbuf, &unpacktest);
+    if (size > 0) {
+        printf("Unpack OK (%d bytes)\n", size);
         print_test_t_csv_line(&unpacktest);
     } else {
-        printf("Parse Error\n");
+        printf("Parse Error: %d\n", size);
     }
     
     return 0;
