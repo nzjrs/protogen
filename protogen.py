@@ -8,9 +8,9 @@ import os.path
 import sys
 import getopt
 
-import protogen.parser as parser
-import protogen.cwriter as cwriter
-import protogen.pywriter as pywriter
+import libprotogen.parser as parser
+import libprotogen.cwriter as cwriter
+import libprotogen.pywriter as pywriter
  
 def usage():
     print   """

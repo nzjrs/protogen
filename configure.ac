@@ -9,5 +9,5 @@ AM_PATH_PYTHON()
 
 AC_OUTPUT([
 Makefile
-protogen/Makefile
+libprotogen/Makefile
 ])

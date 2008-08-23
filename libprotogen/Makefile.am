@@ -1,4 +1,4 @@
-appdir = $(pyexecdir)/protogen
+appdir = $(pyexecdir)/libprotogen
 app_PYTHON = \
 	byte_conversions.py \
 	cwriter.py \
