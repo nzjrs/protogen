@@ -1,0 +1,13 @@
+AC_INIT(protogen, 0.1)
+AM_INIT_AUTOMAKE(AC_PACKAGE_NAME, AC_PACKAGE_VERSION)
+
+AC_CONFIG_SRCDIR(protogen.py)
+
+AM_MAINTAINER_MODE
+
+AM_PATH_PYTHON()
+
+AC_OUTPUT([
+Makefile
+protogen/Makefile
+])
